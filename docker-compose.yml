@@ -1,0 +1,33 @@
+version: '3.0'
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  
+  hasura:
+    depends_on:
+      - postgres
+    image: allen0hu/dreamer-hasura
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    restart: always
+  
+  node:
+    depends_on:
+      - postgres
+      - hasura
+    image: allen0hu/dreamer-node
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    restart: always
+
+volumes:
+  db_data:

@@ -1,0 +1,34 @@
+{
+  "name": "dreamer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "prod": "node ./node/src/server.js",
+    "dev": "export NODE_HASURA_URL='http://localhost:8080/v1/graphql' && nodemon ./node/src/server.js",
+    "hasura": "docker compose -f docker-compose.dev.yml up --build hasura",
+    "test": "jest",
+    "watch": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.3.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "hasura-cli": "^2.7.0",
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
+  }
+}

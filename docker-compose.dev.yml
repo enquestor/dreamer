@@ -1,0 +1,27 @@
+version: '3.0'
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  
+  hasura:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: ./hasura/Dockerfile
+    env_file:
+      - .env
+    environment:
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  db_data:

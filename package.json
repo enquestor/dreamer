@@ -10,6 +10,7 @@
     "prod": "node ./node/src/server.js",
     "dev": "export NODE_HASURA_URL='http://localhost:8080/v1/graphql' && nodemon ./node/src/server.js",
     "hasura": "docker compose -f docker-compose.dev.yml up --build hasura",
+    "console": "cd hasura && hasura console --envfile ../.env --no-browser",
     "test": "jest",
     "watch": "jest --watchAll"
   },

@@ -1,3 +1,4 @@
+
 CREATE TABLE "public"."users" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "username" text NOT NULL, "password" text NOT NULL, "salt" Text NOT NULL, "name" text NOT NULL, "email" text NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "updated_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("username"), UNIQUE ("email"));
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
 RETURNS TRIGGER AS $$
@@ -16,3 +17,5 @@ EXECUTE PROCEDURE "public"."set_current_timestamp_updated_at"();
 COMMENT ON TRIGGER "set_public_users_updated_at" ON "public"."users" 
 IS 'trigger to set value of column "updated_at" to current timestamp on row update';
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE "public"."refresh_tokens" ("refresh_token" text NOT NULL, "user_id" uuid NOT NULL, "expires_at" timestamptz NOT NULL, PRIMARY KEY ("refresh_token") , FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON UPDATE cascade ON DELETE cascade, UNIQUE ("refresh_token"));

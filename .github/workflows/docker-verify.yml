@@ -15,14 +15,14 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     
-    - name: Build and push dreamer-node
+    - name: Build dreamer-node
       uses: docker/build-push-action@v3
       with:
         context: .
         file: ./node/Dockerfile
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/dreamer-node:master
     
-    - name: Build and push dreamer-hasura
+    - name: Build dreamer-hasura
       uses: docker/build-push-action@v3
       with:
         context: .

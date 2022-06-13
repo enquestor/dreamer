@@ -16,15 +16,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [16.x, 18.x]
 
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
+
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    
+    - name: Create .env file
+      uses: SpicyPizza/create-envfile@v1.3.0
+      with:
+        envkey_HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+        envkey_HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "vbugJSHZHfC4XE3R1D3mV5Cc8Zt01q7B" }'
+      
     - run: npm ci
     - run: npm test
